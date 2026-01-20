@@ -1,0 +1,179 @@
+/* ========================================
+   LEGENDA DO GRID
+   ======================================== */
+
+.numero-grid-container {
+  width: 100%;
+  margin: 2rem 0;
+}
+
+.grid-legend {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.legend-color.disponivel {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.legend-color.reservado {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.legend-color.pago {
+  background: linear-gradient(135deg, #434343 0%, #000000 100%);
+}
+
+/* ========================================
+   GRID DE NÚMEROS
+   ======================================== */
+
+.numero-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 8px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.numero-item {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Estados dos números */
+.numero-item.disponivel {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+}
+
+.numero-item.disponivel:hover {
+  transform: scale(1.1);
+  box-shadow: 0 5px 15px rgba(17, 153, 142, 0.4);
+  z-index: 10;
+}
+
+.numero-item.reservado {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.numero-item.pago {
+  background: linear-gradient(135deg, #434343 0%, #000000 100%);
+  color: white;
+  cursor: not-allowed;
+}
+
+.numero-item.selected {
+  transform: scale(1.15);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+  z-index: 100;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1.15);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Efeito de brilho ao passar o mouse */
+.numero-item.disponivel::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+}
+
+.numero-item.disponivel:hover::before {
+  left: 100%;
+}
+
+.numero-value {
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .numero-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    padding: 0.5rem;
+  }
+
+  .numero-item {
+    font-size: 1rem;
+  }
+
+  .grid-legend {
+    gap: 1rem;
+    font-size: 0.8rem;
+  }
+
+  .legend-color {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .numero-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+  }
+
+  .numero-item {
+    font-size: 0.9rem;
+    border-radius: 6px;
+  }
+}
