@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Regras para a coleção de sorteios
+    match /sorteios/{sorteioId} {
+      // Qualquer usuário pode ler sorteios
+      allow read: if true;
+      
+      // Apenas administradores autenticados podem criar/editar sorteios
+      allow create, update, delete: if request.auth != null;
+      
+      // Regras para a subcoleção de números
+      match /numeros/{numeroId} {
+        // Qualquer usuário pode ler números
+        allow read: if true;
+        
+        // Usuários podem reservar números (update)
+        allow update: if resource.data.status == 'disponivel' 
+                      && request.resource.data.status == 'reservado';
+        
+        // Apenas administradores podem criar números
+        allow create, delete: if request.auth != null;
+      }
+    }
+  }
+}
